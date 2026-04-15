@@ -9,8 +9,13 @@ from scipy.stats import spearmanr, rankdata
 from scipy import stats
 from IPython.display import display
 
+## Четвертая лаба
+
 ## Матрица Пирсона
 def corr_matrix_pirson(df):
+    '''
+    Функция для построение матрицы Пирсона
+    '''
     data = df.values
     n = data.shape[1]
     cols = df.columns
@@ -27,6 +32,9 @@ def corr_matrix_pirson(df):
     return pd.DataFrame(res, index=cols, columns=cols)
 
 def pval_matrix(corr, df):
+    '''
+    функция для построения матрицы p-values для матрицы множественных коэффициентов корреляции
+    '''
     n = len(df)
     cols = df.columns
     res = np.zeros((len(cols), len(cols)))
@@ -46,6 +54,9 @@ def pval_matrix(corr, df):
     return pd.DataFrame(res, index=cols, columns=cols)
 
 def pirson_visualization(df):
+    '''
+    Функция для визуализации матрицы Пирсона и p-values для матрицы Пирсона
+    '''
     corr = corr_matrix_pirson(df)
     pvals = pval_matrix(corr, df)
     
@@ -76,6 +87,9 @@ def pirson_visualization(df):
 
 ## Матрица частных коэффициентов
 def partial_correlation_matrix(data):
+    '''
+    Функция для построение матрицы частных отношений и p-values для матрицы частных коэффициентов корреляции
+    '''
     cols = data.columns
     n = len(cols)
     corr_matrix = data.corr().values
@@ -106,6 +120,9 @@ def partial_correlation_matrix(data):
     return pd.DataFrame(part_corr, index=cols, columns=cols), pd.DataFrame(part_p, index=cols, columns=cols)
 
 def partial_correlation_visualization(df):
+    '''
+    Функция для визуализации матрицы частных отношений и p-values для матрицы частных коэффициентов корреляции
+    '''
     pc_matrix, pc_pvals = partial_correlation_matrix(df)
     plt.figure(figsize=(6, 6))
     sns.heatmap(pc_matrix, annot=True, fmt=".3f", cmap="coolwarm", center=0)
@@ -122,6 +139,9 @@ def partial_correlation_visualization(df):
 
 ### Матрица множественных коэффициентов корреляции
 def multiple_correlation_det(data):
+    '''
+    Функция для построение матрицы множественных коэффициентов корреляции и p-values для матрицы множественных коэффициентов корреляции
+    '''
     cols = data.columns
     R_vals = pd.Series(index=cols, dtype=float)
     pval = pd.Series(index=cols, dtype=float)
@@ -141,6 +161,9 @@ def multiple_correlation_det(data):
     return R_vals, pval
 
 def multiple_correlation_visualization(df):
+    '''
+    Функция для визуализации матрицы множественных коэффициентов корреляции и p-values для матрицы множественных коэффициентов корреляции
+    '''
     R_vals, pvals = multiple_correlation_det(df)
     
     plt.figure(figsize=(8, 2))
@@ -158,6 +181,9 @@ def multiple_correlation_visualization(df):
 
 ### Матрица Спирмана
 def spearman_matrix(df):
+    '''
+    Функция для построение матрицы Спирмана и p-values для матрицы Спирмана
+    '''
     cols = df.columns
     n = len(cols)
     corr = np.zeros((n, n))
@@ -178,6 +204,9 @@ def spearman_matrix(df):
     return pd.DataFrame(corr, index=cols, columns=cols), pd.DataFrame(pvals, index=cols, columns=cols)
 
 def spearman_visualization(df):
+    '''
+    Функция для визуализации матрицы Спирмана и p-values для матрицы Спирмана
+    '''
     corr_s, pvals_s = spearman_matrix(df)
 
     plt.figure(figsize=(5, 5))
